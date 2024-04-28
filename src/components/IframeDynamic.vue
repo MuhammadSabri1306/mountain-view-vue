@@ -1,20 +1,27 @@
 <script setup>
 import { ref, watch } from "vue";
 
+const emit = defineEmits([ "iframeLoaded" ]);
 const props = defineProps({
-    url: { default: null, required: true }
+    url: { default: null, required: true },
+    initLoading: { default: false }
 });
 
-const isLoading = ref(props.url ? true : false);
+const isLoading = ref(props.initLoading || (props.url ? true : false));
 const iframeSrc = ref(props.url);
 watch(() => props.url, url => {
     isLoading.value = true;
     iframeSrc.value = url;
 });
+
+const onIframeLoaded = () => {
+    isLoading.value = false;
+    emit("iframeLoaded");
+};
 </script>
 <template>
     <div class="iframe-dynamic" :class="{ 'is-iframe-loading': isLoading }">
-		<iframe frameborder="0" allowfullscreen :src="iframeSrc" @load="isLoading = false" />
+		<iframe v-if="iframeSrc" frameborder="0" allowfullscreen :src="iframeSrc" @load="onIframeLoaded" />
 	</div>
 </template>
 <style scoped>
