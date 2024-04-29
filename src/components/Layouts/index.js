@@ -1,3 +1,2 @@
-import Layout from "./index.vue";
-
+import Layout from "./Layout.vue";
 export default Layout;
