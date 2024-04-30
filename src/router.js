@@ -1,9 +1,15 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import Home from "@/views/Home.vue";
+import About from "@/views/About.vue";
+import Contact from "@/views/Contact.vue";
+import Property from "@/views/Property.vue";
 
 const routes = [
-    { path: "/", component: Home },
+    { path: "/", name: "home", component: Home },
+    { path: "/about", name: "about", component: About },
+    { path: "/contact", name: "contact", component: Contact },
+    { path: "/property/:houseId(\\d+)", name: "property", component: Property },
 ];
 
 export default createRouter({

@@ -47,24 +47,24 @@ const isNavActive = (...routePaths) => {
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
                     <li :class="{ 'active': isNavActive(navRoutes.home.path) }">
-                        <a :href="navRoutes.home.path">{{ navRoutes.home.title }}</a>
+                        <RouterLink :to="navRoutes.home.path">{{ navRoutes.home.title }}</RouterLink>
                     </li>
                     <li :class="{ 'active': isNavActive(navRoutes.about.path) }">
-                        <a :href="navRoutes.about.path">{{ navRoutes.about.title }}</a>
+                        <RouterLink :to="navRoutes.about.path">{{ navRoutes.about.title }}</RouterLink>
                     </li>
                     <li class="drop-down" :class="{ 'active': isNavActive(navRoutes.property1.path, navRoutes.property2.path) }">
                         <a role="button">{{ navRoutes.property.title }}</a>
                         <ul>
                             <li :class="{ 'active': isNavActive(navRoutes.property1.path) }">
-                                <a :href="navRoutes.property1.path">{{ navRoutes.property1.title }}</a>
+                                <RouterLink :to="navRoutes.property1.path">{{ navRoutes.property1.title }}</RouterLink>
                             </li>
                             <li :class="{ 'active': isNavActive(navRoutes.property2.path) }">
-                                <a :href="navRoutes.property2.path">{{ navRoutes.property2.title }}</a>
+                                <RouterLink :to="navRoutes.property2.path">{{ navRoutes.property2.title }}</RouterLink>
                             </li>
                         </ul>
                     </li>
                     <li :class="{ 'active': isNavActive(navRoutes.contact.path) }">
-                        <a :href="navRoutes.contact.path">{{ navRoutes.contact.title }}</a>
+                        <RouterLink :to="navRoutes.contact.path">{{ navRoutes.contact.title }}</RouterLink>
                     </li>
                 </ul>
             </nav>
