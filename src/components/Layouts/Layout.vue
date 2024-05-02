@@ -54,7 +54,7 @@ const loadExternals = () => {
 
 };
 
-loadExternals();
+// loadExternals();
 </script>
 <template>
     <Header />

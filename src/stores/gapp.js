@@ -50,21 +50,27 @@ export const useGappStore = defineStore("gapp", {
             return data;
         },
 
-        async fetchHouseData(houseId, callback = null) {
+        async fetchHouseData(houseId, callback = null, force = false) {
             try {
+
                 if(callback && typeof callback != "function")
                     throw Error("gappStore.fetchHouseData args 1 should be function");
 
-                const { apiKey, sheetId } = this.getEnv();
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${ sheetId }/values/house${ houseId }`;
-                const params = { key: apiKey };
-
-                const response = await axios.get(url, { params });
-                const data = this.formatFromValues(response.data);
-                if(!data)
-                    console.warn(response.data);
-                else
-                    this.houses[houseId] = data;
+                if(force || !this.houses[houseId]) {
+                    const { apiKey, sheetId } = this.getEnv();
+                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${ sheetId }/values/${ houseId }`;
+                    const params = { key: apiKey };
+    
+                    const response = await axios.get(url, { params });
+                    const data = this.formatFromValues(response.data);
+                    if(!data)
+                        console.warn(response.data, data);
+                    else {
+                        const houses = this.houses;
+                        houses[houseId] = data;
+                        this.houses = houses;
+                    }
+                }
 
             } catch(err) {
                 console.error(err);
