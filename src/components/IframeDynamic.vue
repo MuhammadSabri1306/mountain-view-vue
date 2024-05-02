@@ -3,18 +3,18 @@ import { ref, watch } from "vue";
 
 const emit = defineEmits([ "iframeLoaded", "iframeError" ]);
 const props = defineProps({
-    url: { default: null },
+    src: { default: null },
     height: { type: String, default: "40rem" }
 });
 
-const iframeSrc = ref(props.url);
+const iframeSrc = ref(props.src);
 const isLoading = ref(true);
 const isError = ref(false);
 
-watch(() => props.url, url => {
+watch(() => props.src, src => {
     isLoading.value = true;
     isError.value = false;
-    iframeSrc.value = url;
+    iframeSrc.value = src;
 });
 
 const onIframeLoaded = () => {
@@ -38,7 +38,7 @@ const onIframeError = () => {
         <div v-else-if="isError" class="iframe-layer">
             <slot name="error"></slot>
         </div>
-        <div v-else class="iframe-layer">
+        <div v-else-if="!iframeSrc" class="iframe-layer">
             <slot name="empty"></slot>
         </div>
 	</div>

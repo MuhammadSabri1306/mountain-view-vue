@@ -6,8 +6,8 @@ const navRoutes = {
     home: { title: "Beranda", path: "/" },
     about: { title: "Tentang Kami", path: "/about" },
     property: { title: "Properti" },
-    property1: { title: "Tipe 36", path: "/property/1" },
-    property2: { title: "Tipe 45", path: "/property/2" },
+    property1: { title: "Tipe 36", path: "/property/type-36" },
+    property2: { title: "Tipe 45", path: "/property/type-45" },
     contact: { title: "Kontak Kami", path: "/contact" },
 };
 

@@ -1,61 +1,44 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useGappStore } from "@/stores/gapp";
+import property36Data from "@/datas/property-36";
+import property45Data from "@/datas/property-45";
 import Layouts from "@/components/Layouts";
 import IframeDynamic from "@/components/IframeDynamic.vue";
-import IconLoading from "@/components/IconLoading.vue";
 import Skeleton from "@/components/Skeleton.vue";
+import Overlay from "@/components/Overlay.vue";
+import Error404 from "@/views/Error404.vue";
 
 const route = useRoute();
-const toHouseId = houseIdNumber => `house${ houseIdNumber }`;
 const house = ref(null);
 
-const gappStore = useGappStore();
-const isDataLoading = ref(true);
-const getHouseData = (houseIdNumber) => {
-    if(!houseIdNumber) return;
-    const houseId = toHouseId(houseIdNumber);
-    isDataLoading.value = true;
-    gappStore.fetchHouseData(houseId, () => {
-
-        if(!gappStore.houses[houseId]) {
-            house.value = null;
-            isDataLoading.value = false;
-            return;
-        }
-
-        house.value = {
-            type: gappStore.houses[houseId].type || "-",
-            img: gappStore.houses[houseId].img || null,
-            price: gappStore.houses[houseId].price || "-",
-            priceDp: gappStore.houses[houseId].price_dp || "-",
-            priceKpr: gappStore.houses[houseId].price_kpr || "-",
-            plans: gappStore.houses[houseId].plans || [],
-            panoragoUrlOut: gappStore.houses[houseId].panorago?.urls?.osv || null,
-            panoragoUrlIn: gappStore.houses[houseId].panorago?.urls?.isv || null,
-        };
-        isDataLoading.value = false;
-
-    });
+const watcherSrc = () => route.params.houseId;
+const watcherCall = houseId => {
+    if(houseId == "type-36")
+        house.value = property36Data;
+    else if(houseId == "type-45")
+        house.value = property45Data;
+    else
+        house.value = null;
 };
 
-// getHouseData(route.params.houseId);
-// update utk host manual
+watch(watcherSrc, watcherCall);
+watcherCall( watcherSrc() );
+
+const openPanoragoIsv = ref(false);
+const showPanoragoIsv = ref(false);
+const openPanoragoOsv = ref(false);
+const showPanoragoOsv = ref(false);
 </script>
 <template>
-    <Layouts>
+    <Layouts v-if="house">
         <template #main>
             <div class="mt-5 tw-mb-[200px]">
-                <div v-if="!isDataLoading && !house">
-                    <h5 class="text-center text-muted">Data tidak ditemukan.</h5>
-                </div>
-                <div v-else>
+                <div>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <Skeleton v-if="isDataLoading" class="tw-w-full tw-aspect-square" />
-                                <img v-else-if="house.img" class="img-fluid" :src="house.img" alt="">
+                                <img class="img-fluid" :src="house.img" alt="">
                             </div>
                             <div class="col-md-6">
                                 <div>
@@ -63,45 +46,25 @@ const getHouseData = (houseIdNumber) => {
                                         <tr>
                                             <th>Type</th>
                                             <td>:</td>
-                                            <td v-if="isDataLoading">
-                                                <Skeleton height="1.5rem" width="5rem" />
-                                            </td>
-                                            <td v-else>{{ house.type }}</td>
+                                            <td>{{ house.type }}</td>
                                         </tr>
                                         <tr>
                                             <th>Harga</th>
                                             <td>:</td>
-                                            <td v-if="isDataLoading">
-                                                <Skeleton height="1.5rem" width="14rem" />
-                                            </td>
-                                            <td v-else>{{ house.price }}</td>
+                                            <td>{{ house.price }}</td>
                                         </tr>
                                         <tr>
                                             <th>DP/UM</th>
                                             <td>:</td>
-                                            <td v-if="isDataLoading">
-                                                <Skeleton height="1.5rem" width="14rem" />
-                                            </td>
-                                            <td v-else>{{ house.priceDp }}</td>
+                                            <td>{{ house.priceDp }}</td>
                                         </tr>
                                         <tr>
                                             <th>KPR</th>
                                             <td>:</td>
-                                            <td v-if="isDataLoading">
-                                                <Skeleton height="1.5rem" width="14rem" />
-                                            </td>
-                                            <td v-else>{{ house.priceKpr }}</td>
+                                            <td>{{ house.priceKpr }}</td>
                                         </tr>
                                     </table>
-                                    <table v-if="isDataLoading" class="table">
-                                        <tr>
-                                            <th class="text-right">Estimasi Angsuran :</th>
-                                            <th>
-                                                <Skeleton height="1.5rem" width="14rem" />
-                                            </th>
-                                        </tr>
-                                    </table>
-                                    <table v-else-if="house.plans.length < 1" class="table">
+                                    <table v-if="!house.plans || house.plans.length < 1" class="table">
                                         <tr>
                                             <th class="text-right">Estimasi Angsuran :</th>
                                             <th>-</th>
@@ -123,23 +86,43 @@ const getHouseData = (houseIdNumber) => {
                                         </tr>
                                     </table>
                                 </div>
+                                <div v-if="house?.panoragoUrls?.insideView || house?.panoragoUrls?.outsideView">
+                                    <h4 class="tw-font-semibold tw-text-xl tw-text-center mb-2">Tampilkan Panorama</h4>
+                                    <div>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td v-if="house?.panoragoUrls?.insideView">
+                                                    <button type="button" @click="showPanoragoIsv = true"
+                                                        class="btn btn-block btn-danger">Bagian Dalam</button>
+                                                </td>
+                                                <td v-if="house?.panoragoUrls?.outsideView">
+                                                    <button type="button" @click="showPanoragoOsv = true"
+                                                        class="btn btn-block btn-danger">Bagian Luar</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <Overlay v-model:show="showPanoragoIsv">
+                                    <div class="tw-w-full md:tw-w-[60vw]">
+                                        <IframeDynamic :src="house.panoragoUrls.insideView" height="75vh">
+                                            <template #loading>
+                                                <Skeleton width="100%" height="100%" />
+                                            </template>
+                                        </IframeDynamic>
+                                    </div>
+                                </Overlay>
+                                <Overlay v-model:show="showPanoragoOsv">
+                                    <div class="tw-w-full md:tw-w-[60vw]">
+                                        <IframeDynamic :src="house.panoragoUrls.outsideView" height="75vh" />
+                                    </div>
+                                </Overlay>
                             </div>
                         </div>
-                    </div>
-                    <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 my-4">
-                        <IframeDynamic :src="house?.panoragoUrlOut || null" height="40rem" class="tw-bg-slate-100">
-                            <template #loading>
-                                <Skeleton height="100%" width="100%" />
-                            </template>
-                        </IframeDynamic>
-                        <IframeDynamic :src="house?.panoragoUrlIn || null" height="40rem" class="tw-bg-slate-100">
-                            <template #loading>
-                                <Skeleton height="100%" width="100%" />
-                            </template>
-                        </IframeDynamic>
                     </div>
                 </div>
             </div>
         </template>
     </Layouts>
+    <Error404 v-else />
 </template>
