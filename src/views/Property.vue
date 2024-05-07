@@ -104,7 +104,7 @@ const showPanoragoOsv = ref(false);
                                     </div>
                                 </div>
                                 <Overlay v-model:show="showPanoragoIsv">
-                                    <div class="tw-w-full md:tw-w-[60vw]">
+                                    <div class="tw-w-screen md:tw-w-[60vw]">
                                         <IframeDynamic :src="house.panoragoUrls.insideView" height="75vh">
                                             <template #loading>
                                                 <Skeleton width="100%" height="100%" />
@@ -113,7 +113,7 @@ const showPanoragoOsv = ref(false);
                                     </div>
                                 </Overlay>
                                 <Overlay v-model:show="showPanoragoOsv">
-                                    <div class="tw-w-full md:tw-w-[60vw]">
+                                    <div class="tw-w-screen md:tw-w-[60vw]">
                                         <IframeDynamic :src="house.panoragoUrls.outsideView" height="75vh" />
                                     </div>
                                 </Overlay>
