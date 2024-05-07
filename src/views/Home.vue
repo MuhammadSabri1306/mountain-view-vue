@@ -55,23 +55,23 @@ import Layouts from "@/components/Layouts";
                         <div class="row">
 
                             <div class="col-lg-6">
-                                <a href="/property/1">
+                                <RouterLink to="/property/type-36">
                                     <div class="icon-box text-center">
                                         <i class="icofont-home"></i>
                                         <h3>Rumah Tipe 36</h3>
                                         <p>Rumah ini mempunyai luas bangunan sebesar 36 meter persegi dan luas tanah hingga 72 meter persegi</p>
                                     </div>
-                                </a>
+                                </RouterLink>
                             </div>
 
                             <div class="col-lg-6 mt-4 mt-lg-0">
-                                <a href="/property/2">
+                                <RouterLink to="/property/type-45">
                                     <div class="icon-box text-center">
                                         <i class="icofont-home"></i>
                                         <h3>Rumah Tipe 45</h3>
                                         <p>Rumah ini mempunyai luas bangunan sebesar 45 meter persegi dan luas tanah hingga 98 meter persegi</p>
                                     </div>
-                                </a>
+                                </RouterLink>
                             </div>
 
                         </div>
