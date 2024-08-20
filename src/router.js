@@ -5,12 +5,14 @@ import About from "@/views/About.vue";
 import Contact from "@/views/Contact.vue";
 import Property from "@/views/Property.vue";
 import Error404 from "@/views/Error404.vue";
+import TestRoomTour from "@/views/TestRoomTour.vue";
 
 const routes = [
     { path: "/", name: "home", component: Home },
     { path: "/about", name: "about", component: About },
     { path: "/contact", name: "contact", component: Contact },
     { path: "/property/:houseId", name: "property", component: Property },
+    { path: "/test-room-tour", name: "testRoomTour", component: TestRoomTour },
     { path: "/:pathMatch(.*)*", name: "e404", component: Error404 },
 ];
 
