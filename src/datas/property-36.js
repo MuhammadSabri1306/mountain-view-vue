@@ -47,10 +47,9 @@ export default {
     | price -> Biaya Angsuran
     */
     plans: [
-        { span: "5 bulan", price: "-" },
-        { span: "10 bulan", price: "Rp. 1.604.451" },
-        { span: "15 bulan", price: "Rp. 1.193.641" },
-        { span: "20 bulan", price: "Rp. 994.172" },
+        { span: "10 tahun", price: "Rp. 1.604.451" },
+        { span: "15 tahun", price: "Rp. 1.193.641" },
+        { span: "20 tahun", price: "Rp. 994.172" },
     ],
 
     /*
