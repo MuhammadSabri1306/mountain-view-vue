@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 
 const emit = defineEmits([ "iframeLoaded", "iframeError" ]);
 const props = defineProps({
@@ -7,14 +7,20 @@ const props = defineProps({
     height: { type: String, default: "40rem" }
 });
 
-const iframeSrc = ref(props.src);
+const getBuiltSrc = () => {
+    if(typeof props.src == "string" && props.src.startsWith("/"))
+        return import.meta.env.BASE_URL + props.src.slice(1);
+    return props.src;
+};
+
+const iframeSrc = ref( getBuiltSrc() );
 const isLoading = ref(true);
 const isError = ref(false);
 
 watch(() => props.src, src => {
     isLoading.value = true;
     isError.value = false;
-    iframeSrc.value = src;
+    iframeSrc.value = getBuiltSrc();
 });
 
 const onIframeLoaded = () => {

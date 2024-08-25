@@ -50,14 +50,14 @@ const btnMarkerStyle = computed(() => {
     <div v-if="panoramaMarkerData">
         <table class="table">
             <tr>
-                <th style="width:1px">yaw</th>
-                <th style="width:1px">:</th>
-                <td>{{ panoramaMarkerData.yaw }}</td>
-            </tr>
-            <tr>
                 <th>pitch</th>
                 <th>:</th>
                 <td>{{ panoramaMarkerData.pitch }}</td>
+            </tr>
+            <tr>
+                <th style="width:1px">yaw</th>
+                <th style="width:1px">:</th>
+                <td>{{ panoramaMarkerData.yaw }}</td>
             </tr>
         </table>
     </div>
