@@ -6,7 +6,7 @@ import Contact from "@/views/Contact.vue";
 import Property from "@/views/Property.vue";
 import PanoramaViewer from "@/views/PanoramaViewer.vue";
 import Error404 from "@/views/Error404.vue";
-import TestRoomTour from "@/views/TestRoomTour.vue";
+// import TestRoomTour from "@/views/TestRoomTour.vue";
 
 const routes = [
     { path: "/", name: "home", component: Home },
@@ -14,7 +14,7 @@ const routes = [
     { path: "/contact", name: "contact", component: Contact },
     { path: "/property/:houseId", name: "property", component: Property },
     { path: "/panorama-viewer/:panoramaId", name: "panoramaViewer", component: PanoramaViewer },
-    { path: "/test-room-tour", name: "testRoomTour", component: TestRoomTour },
+    // { path: "/test-room-tour", name: "testRoomTour", component: TestRoomTour },
     { path: "/:pathMatch(.*)*", name: "e404", component: Error404 },
 ];
 
