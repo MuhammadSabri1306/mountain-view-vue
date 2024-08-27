@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from "vue";
-import { useRoute, RouterLink } from "vue-router";
+import { ref, computed, watch } from "vue";
+import { useRoute, RouterLink, onBeforeRouteLeave } from "vue-router";
 
 const navRoutes = {
     home: { title: "Beranda", path: "/" },
@@ -20,6 +20,15 @@ const isNavActive = (...routePaths) => {
     }
     return false;
 };
+
+const isNavToggled = ref(false);
+watch(() => route.params, () => isNavToggled.value && (isNavToggled.value = false));
+onBeforeRouteLeave(async () => {
+    if(isNavToggled.value) {
+        isNavToggled.value = false;
+        await new Promise(resolve => setTimeout(resolve, 350));
+    }
+});
 </script>
 <template>
     <section id="topbar" class="d-none d-lg-block">
@@ -35,39 +44,95 @@ const isNavActive = (...routePaths) => {
             </div>
         </div>
     </section>
-    <header id="header">
-        <div class="container d-flex">
-            <div class="logo mr-auto">
-                <h1 class="text-light">
-                    <RouterLink to="/">
-                        <span>The Mountain View</span>
-                    </RouterLink>
-                </h1>
+    <header>
+        <div id="header" class="navbar navbar-light">
+            <div class="container d-flex">
+                <div class="logo mr-auto">
+                    <h1 class="text-light !tw-text-[20px] md:!tw-text-[26px]">
+                        <RouterLink to="/">
+                            <span>The Mountain View</span>
+                        </RouterLink>
+                    </h1>
+                </div>
+                <button type="button" id="btnNavbarToggler" class="navbar-toggler" aria-controls="navbar"
+                    aria-expanded="false" aria-label="Toggle navigation" @click="isNavToggled = !isNavToggled">
+                    <span id="navbarTogglerIcon" class="navbar-toggler-icon"></span>
+                </button>
+                <nav id="navbar" class="nav-menu" :class="{ 'nav-toggled': isNavToggled }">
+                    <ul>
+                        <li class="navbar-close">
+                            <button type="button" class="close" aria-label="Close" @click="isNavToggled = false">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </li>
+                        <li :class="{ 'active': isNavActive(navRoutes.home.path) }">
+                            <RouterLink :to="navRoutes.home.path">{{ navRoutes.home.title }}</RouterLink>
+                        </li>
+                        <li :class="{ 'active': isNavActive(navRoutes.about.path) }">
+                            <RouterLink :to="navRoutes.about.path">{{ navRoutes.about.title }}</RouterLink>
+                        </li>
+                        <li class="drop-down" :class="{ 'active': isNavActive(navRoutes.property1.path, navRoutes.property2.path) }">
+                            <a role="button">{{ navRoutes.property.title }}</a>
+                            <ul>
+                                <li :class="{ 'active': isNavActive(navRoutes.property1.path) }">
+                                    <RouterLink :to="navRoutes.property1.path">{{ navRoutes.property1.title }}</RouterLink>
+                                </li>
+                                <li :class="{ 'active': isNavActive(navRoutes.property2.path) }">
+                                    <RouterLink :to="navRoutes.property2.path">{{ navRoutes.property2.title }}</RouterLink>
+                                </li>
+                            </ul>
+                        </li>
+                        <li :class="{ 'active': isNavActive(navRoutes.contact.path) }">
+                            <RouterLink :to="navRoutes.contact.path">{{ navRoutes.contact.title }}</RouterLink>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <nav class="nav-menu d-none d-lg-block">
-                <ul>
-                    <li :class="{ 'active': isNavActive(navRoutes.home.path) }">
-                        <RouterLink :to="navRoutes.home.path">{{ navRoutes.home.title }}</RouterLink>
-                    </li>
-                    <li :class="{ 'active': isNavActive(navRoutes.about.path) }">
-                        <RouterLink :to="navRoutes.about.path">{{ navRoutes.about.title }}</RouterLink>
-                    </li>
-                    <li class="drop-down" :class="{ 'active': isNavActive(navRoutes.property1.path, navRoutes.property2.path) }">
-                        <a role="button">{{ navRoutes.property.title }}</a>
-                        <ul>
-                            <li :class="{ 'active': isNavActive(navRoutes.property1.path) }">
-                                <RouterLink :to="navRoutes.property1.path">{{ navRoutes.property1.title }}</RouterLink>
-                            </li>
-                            <li :class="{ 'active': isNavActive(navRoutes.property2.path) }">
-                                <RouterLink :to="navRoutes.property2.path">{{ navRoutes.property2.title }}</RouterLink>
-                            </li>
-                        </ul>
-                    </li>
-                    <li :class="{ 'active': isNavActive(navRoutes.contact.path) }">
-                        <RouterLink :to="navRoutes.contact.path">{{ navRoutes.contact.title }}</RouterLink>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </header>
 </template>
+<style scoped>
+
+header {
+    @apply tw-sticky tw-top-0 tw-z-50;
+}
+
+#btnNavbarToggler {
+    @apply lg:tw-hidden;
+}
+
+/* #navbar {
+    @apply tw-hidden lg:tw-block;
+} */
+
+#navbar {
+    @apply tw-transition-[left_300ms] lg:tw-transition-none
+        tw-fixed tw-w-screen tw-h-screen tw-top-0 -tw-left-full tw-bg-white
+        lg:tw-static lg:tw-w-auto lg:tw-h-auto lg:tw-top-auto lg:tw-left-auto lg:tw-bg-inherit;
+}
+
+#navbar.nav-toggled {
+    @apply tw-left-0 lg:tw-left-auto;
+}
+
+#navbar > ul {
+    @apply tw-flex tw-flex-col lg:tw-block;
+}
+
+.navbar-close {
+    @apply tw-ms-auto lg:tw-hidden;
+}
+
+.navbar-close > button {
+    @apply tw-p-4;
+}
+
+#navbar li:not(.navbar-close) > a {
+    @apply tw-border-b tw-border-[rgba(0,0,0,0.1)] lg:tw-border-0;
+}
+
+.nav-menu .drop-down:hover > ul {
+    @apply tw-w-[calc(100vw-40px)] lg:tw-w-auto;
+}
+
+</style>

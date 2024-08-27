@@ -205,7 +205,6 @@ export const panellumSrc = {
                 }
             }
             srcScenes[sceneId] = scene;
-            console.log(sceneId, scene)
         });
         return srcScenes;
     })()

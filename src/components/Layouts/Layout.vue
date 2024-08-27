@@ -58,7 +58,7 @@ const loadExternals = () => {
 </script>
 <template>
     <Header />
-    <main id="main">
+    <main>
         <h3 v-if="heading">{{ heading }}</h3>
         <slot name="main"></slot>
     </main>
