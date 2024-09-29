@@ -94,6 +94,14 @@ import Layouts from "@/components/Layouts";
                     </div>
                 </section>
 
+                <section class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <img src="/assets/img/denah-perumahan.jpg" alt="" class="img-fluid" />
+                        </div>
+                    </div>
+                </section>
+
             </article>
 
         </template>
