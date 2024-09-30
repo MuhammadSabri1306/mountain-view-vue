@@ -128,7 +128,7 @@ const showPanoragoOsv = ref(false);
                             <div class="col-md-6">
                                 <img class="img-fluid" src="/assets/img/denah/denah-rumah.webp" alt="">
                             </div>
-                            <div class="col-md-6 pt-5">
+                            <div class="col-md-6 md:tw-pt-[10rem]">
                                 <h3 class="h3">Tipe 36</h3>
                                 <p class="mb-4">
                                     Luas Bangunan: 36m 2<br>
@@ -153,7 +153,7 @@ const showPanoragoOsv = ref(false);
                             <div class="col-md-6">
                                 <img class="img-fluid" src="/assets/img/denah/denah-rumah.webp" alt="">
                             </div>
-                            <div class="col-md-6 pt-5">
+                            <div class="col-md-6 md:tw-pt-[10rem]">
                                 <h3 class="h3">Tipe 45</h3>
                                 <p class="mb-4">
                                     Luas Bangunan: 45m 2<br>
