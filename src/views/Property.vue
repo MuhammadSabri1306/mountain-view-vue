@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import property36Data from "@/datas/property-36";
 import property45Data from "@/datas/property-45";
@@ -10,6 +10,7 @@ import Overlay from "@/components/Overlay.vue";
 import Error404 from "@/views/Error404.vue";
 
 const route = useRoute();
+const houseId = computed(() => route.params.houseId);
 const house = ref(null);
 
 const watcherSrc = () => route.params.houseId;
@@ -36,7 +37,7 @@ const showPanoragoOsv = ref(false);
             <div class="mt-5 tw-mb-[200px]">
                 <div>
                     <div class="container">
-                        <div class="row">
+                        <div class="row mb-4">
                             <div class="col-md-6">
                                 <img class="img-fluid" :src="house.img" alt="">
                             </div>
@@ -121,6 +122,56 @@ const showPanoragoOsv = ref(false);
                                         </IframeDynamic>
                                     </div>
                                 </Overlay>
+                            </div>
+                        </div>
+                        <div v-if="houseId == 'type-36'" class="row g-4 mt-5">
+                            <div class="col-md-6">
+                                <img class="img-fluid" src="/assets/img/denah/denah-rumah.webp" alt="">
+                            </div>
+                            <div class="col-md-6 pt-5">
+                                <h3 class="h3">Tipe 36</h3>
+                                <p class="mb-4">
+                                    Luas Bangunan: 36m 2<br>
+                                    Luas Lahan: 72m 2<br>
+                                    Kamar Tidur: 2<br>
+                                    Kamar Mandi: 1
+                                </p>
+                                <ul class="tw-list-disc">
+                                    <li>
+                                        Atap rangka baja ringan, penutup spandek
+                                    </li>
+                                    <li>
+                                        Dinding pasangan bata ringan diplester
+                                    </li>
+                                    <li>
+                                        Lantai & Pondasi pasangan keramik uk.40x40 & pasangan batu gunung
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div v-else-if="houseId == 'type-45'" class="row g-4 mt-5">
+                            <div class="col-md-6">
+                                <img class="img-fluid" src="/assets/img/denah/denah-rumah.webp" alt="">
+                            </div>
+                            <div class="col-md-6 pt-5">
+                                <h3 class="h3">Tipe 45</h3>
+                                <p class="mb-4">
+                                    Luas Bangunan: 45m 2<br>
+                                    Luas Lahan: 96m 2<br>
+                                    Kamar Tidur: 2<br>
+                                    Kamar Mandi: 1
+                                </p>
+                                <ul class="tw-list-disc">
+                                    <li>
+                                        Atap rangka baja ringan, penutup spandek
+                                    </li>
+                                    <li>
+                                        Dinding pasangan bata ringan diplester
+                                    </li>
+                                    <li>
+                                        Lantai & Pondasi pasangan keramik uk.40x40 & pasangan batu gunung
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
