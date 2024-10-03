@@ -4,13 +4,13 @@ export const assets = {
     backYard: "/assets/img/panorama/property-36/back-yard.JPG",
     frontYard: "/assets/img/panorama/property-36/front-yard.JPG",
     sittingRoom: {
-        step1: "/assets/img/panorama/property-36/sitting-room-1.JPG",
-        step2: "/assets/img/panorama/property-36/sitting-room-2.JPG",
-        step3: "/assets/img/panorama/property-36/sitting-room-3.JPG",
+        step1: "/assets/img/panorama/property-36/sitting-room-1.jpg",
+        step2: "/assets/img/panorama/property-36/sitting-room-2.jpg",
+        step3: "/assets/img/panorama/property-36/sitting-room-3.jpg",
     },
-    bedRoomA: "/assets/img/panorama/property-36/bed-room-a.JPG",
-    bedRoomB: "/assets/img/panorama/property-36/bed-room-b.JPG",
-    toilet: "/assets/img/panorama/property-36/toilet.JPG",
+    bedRoomA: "/assets/img/panorama/property-36/bed-room-a.jpg",
+    bedRoomB: "/assets/img/panorama/property-36/bed-room-b.jpg",
+    toilet: "/assets/img/panorama/property-36/toilet.jpg",
 };
 
 const scenes = {
